@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include <conio.h>
+//#include <conio.h>
 
 struct node 
 {
@@ -90,7 +90,8 @@ node** convertToArray(node* root, int* l)
 		len += pow(2, i);
 	*l = len;
 	node** array = (node**)malloc(len * sizeof(node*));
-	for (int i = 0; i < len; i++, array[i] = NULL);
+	for (int i = 0; i < len; i++)
+		array[i] = NULL;
 
 	if (len != 0)
 	{
@@ -104,7 +105,7 @@ node** convertToArray(node* root, int* l)
 	else
 		return NULL;
 
-	for (int i = 1; i < len; i++)
+	for (int i = 1; i * 2 + 2 < len; i++)
 	{
 		if (array[i] != NULL)
 		{
@@ -151,6 +152,7 @@ void print(node* root)
 					printf("%d", *(a[indLvl + j]->val));
 				else
 					printf(" ");
+					//printf("N");
 				printSpace(pow(2, mD - i + 2) - 1);
 			}
 			printf("\n");
@@ -159,3 +161,16 @@ void print(node* root)
 
 }
 
+void clear(node* root)
+{
+	if(root != NULL)
+		if(root->left != NULL)
+			clear(root->left);
+		else if (root->right != NULL)
+			clear(root->right);
+		else
+		{
+			free(root->val);
+			free(root);
+		}
+}
